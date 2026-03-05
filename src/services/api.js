@@ -1,6 +1,6 @@
 // API Service for Backend Integration
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = 'https://lostfound-backend-2ugd.onrender.com';
 
 // Generic API request function
 const apiRequest = async (endpoint, options = {}) => {
