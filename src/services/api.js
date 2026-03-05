@@ -46,7 +46,7 @@ const apiRequest = async (endpoint, options = {}) => {
 export const authAPI = {
   // Register new user
   register: async (userData) => {
-    return await apiRequest('/auth/register', {
+    return await apiRequest('/api/auth/register', {
       method: 'POST',
       body: JSON.stringify(userData),
     });
@@ -54,7 +54,7 @@ export const authAPI = {
 
   // Login user
   login: async (credentials) => {
-    return await apiRequest('/auth/login', {
+    return await apiRequest('/api/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
