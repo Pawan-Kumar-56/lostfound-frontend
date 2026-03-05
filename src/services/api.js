@@ -2,6 +2,23 @@
 
 const API_BASE_URL = 'https://lostfound-backend-2ugd.onrender.com';
 
+// Test function to check if backend is accessible
+export const testBackendConnection = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/auth/test`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log('Backend test response:', response.status);
+    return response.ok;
+  } catch (error) {
+    console.error('Backend connection test failed:', error);
+    return false;
+  }
+};
+
 // Generic API request function
 const apiRequest = async (endpoint, options = {}) => {
   try {
