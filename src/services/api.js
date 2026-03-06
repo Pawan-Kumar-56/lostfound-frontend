@@ -1,6 +1,6 @@
 // API Service for Backend Integration
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://lostfound-backend-2ugd.onrender.com';
 
 // Test function to check if backend is accessible
 export const testBackendConnection = async () => {
@@ -65,7 +65,17 @@ export const authAPI = {
 export const itemsAPI = {
   // Get all items with pagination
   getAll: async (page = 0, size = 10) => {
-    return await apiRequest('/api/items?page=' + page + '&size=' + size);
+    return await apiRequest(`/api/items?page=${page}&size=${size}`);
+  },
+
+  // Search items
+  search: async (searchTerm, page = 0, size = 10) => {
+    return await apiRequest(`/api/items/search?search=${encodeURIComponent(searchTerm)}&page=${page}&size=${size}`);
+  },
+
+  // Get items by user email
+  getItemsByUser: async (userEmail, page = 0, size = 10) => {
+    return await apiRequest(`/api/items/my?userEmail=${encodeURIComponent(userEmail)}&page=${page}&size=${size}`);
   },
 
   // Create new item
@@ -78,24 +88,14 @@ export const itemsAPI = {
 
   // Get item by ID
   getById: async (id) => {
-    return await apiRequest('/api/items/' + id);
+    return await apiRequest(`/api/items/${id}`);
   },
 
   // Delete item
   delete: async (id) => {
-    return await apiRequest('/api/items/' + id, {
+    return await apiRequest(`/api/items/${id}`, {
       method: 'DELETE',
     });
-  },
-
-  // Search items
-  search: async (searchTerm, page = 0, size = 10) => {
-    return await apiRequest('/api/items/search?search=' + encodeURIComponent(searchTerm) + '&page=' + page + '&size=' + size);
-  },
-
-  // Get items by user
-  getByUser: async (userEmail, page = 0, size = 10) => {
-    return await apiRequest('/api/items/my?userEmail=' + encodeURIComponent(userEmail) + '&page=' + page + '&size=' + size);
   },
 };
 
