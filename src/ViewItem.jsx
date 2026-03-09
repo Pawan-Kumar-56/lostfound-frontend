@@ -61,26 +61,6 @@ const ViewItem = () => {
     setLoading(false);
   };
 
-  // Auto refresh every 10 seconds
-  useEffect(() => {
-    const refreshInterval = setInterval(() => {
-      console.log('Auto-refresh triggered:', new Date().toISOString());
-      loadItems();
-    }, 10000);
-
-    const handleFocus = () => {
-      console.log('Component got focus, refreshing items...');
-      loadItems();
-    };
-
-    document.addEventListener('focus', handleFocus);
-
-    return () => {
-      clearInterval(refreshInterval);
-      document.removeEventListener('focus', handleFocus);
-    };
-  }, []);
-
   // Filter items
   useEffect(() => {
     let filtered = items;
