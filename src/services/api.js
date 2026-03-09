@@ -44,7 +44,23 @@ const apiRequest = async (endpoint, options = {}) => {
 
 // Authentication API
 export const authAPI = {
-  // Register new user
+  // Send OTP to email
+  sendOtp: async (email) => {
+    return await apiRequest('/api/auth/send-otp', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  },
+
+  // Verify OTP
+  verifyOtp: async (email, otp) => {
+    return await apiRequest('/api/auth/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ email, otp }),
+    });
+  },
+
+  // Register new user (with OTP verification)
   register: async (userData) => {
     return await apiRequest('/api/auth/register', {
       method: 'POST',
