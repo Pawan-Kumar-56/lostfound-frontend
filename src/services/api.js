@@ -81,7 +81,8 @@ export const authAPI = {
 export const itemsAPI = {
   // Get all items with pagination
   getAll: async (page = 0, size = 10) => {
-    return await apiRequest(`/api/items?page=${page}&size=${size}`);
+    // Temporarily use simple endpoint for debugging
+    return await apiRequest('/api/items/simple-items');
   },
 
   // Search items

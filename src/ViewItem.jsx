@@ -25,22 +25,31 @@ const ViewItem = () => {
   const loadItems = async () => {
     setLoading(true);
     try {
-      // Get items from backend API with larger page size to get all items
+      // Get items from backend API
       const response = await itemsAPI.getAll(0, 50); // Request 50 items to get all 15
 
       console.log('=== VIEW ITEM DEBUG ===');
       console.log('Raw API response:', response);
       console.log('Response type:', typeof response);
-      console.log('Response keys:', Object.keys(response));
-      console.log('Response content:', response.content);
-      console.log('Content type:', typeof response.content);
-      console.log('Items count:', response.content?.length || 0);
-      console.log('Total elements in database:', response.totalElements);
+      console.log('Response isArray:', Array.isArray(response));
       console.log('Load timestamp:', new Date().toISOString());
       console.log('====================');
 
+      // Handle both simple list and paginated response
+      let itemsArray = [];
+      if (Array.isArray(response)) {
+        // Simple list response
+        itemsArray = response;
+      } else if (response && response.content) {
+        // Paginated response
+        itemsArray = response.content;
+      }
+
+      console.log('Items array:', itemsArray);
+      console.log('Items count:', itemsArray.length);
+
       // Transform backend data to frontend format
-      const transformedItems = response.content.map(item => ({
+      const transformedItems = itemsArray.map(item => ({
         id: item.id,
         itemName: item.itemName,
         description: item.description,
