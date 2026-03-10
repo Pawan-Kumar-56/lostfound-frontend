@@ -28,10 +28,16 @@ const ViewItem = () => {
       // Get items from backend API with larger page size to get all items
       const response = await itemsAPI.getAll(0, 50); // Request 50 items to get all 15
 
-      console.log('Items from backend:', response);
+      console.log('=== VIEW ITEM DEBUG ===');
+      console.log('Raw API response:', response);
+      console.log('Response type:', typeof response);
+      console.log('Response keys:', Object.keys(response));
+      console.log('Response content:', response.content);
+      console.log('Content type:', typeof response.content);
       console.log('Items count:', response.content?.length || 0);
       console.log('Total elements in database:', response.totalElements);
       console.log('Load timestamp:', new Date().toISOString());
+      console.log('====================');
 
       // Transform backend data to frontend format
       const transformedItems = response.content.map(item => ({
