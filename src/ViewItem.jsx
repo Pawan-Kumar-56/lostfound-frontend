@@ -43,6 +43,12 @@ const ViewItem = () => {
       } else if (response && response.content) {
         // Paginated response
         itemsArray = response.content;
+      } else if (response) {
+        // Direct array response
+        itemsArray = response;
+      } else {
+        console.error('Invalid response format:', response);
+        itemsArray = [];
       }
 
       console.log('Items array:', itemsArray);
@@ -62,7 +68,7 @@ const ViewItem = () => {
           item.imageUrl && item.imageUrl.startsWith('data:')
             ? item.imageUrl
             : item.imageUrl || 'https://picsum.photos/300/200?random=' + item.id,
-        postedBy: item.postedBy,
+        postedBy: item.postedBy || 'Unknown User',
         postedDate: item.postedAt
       }));
 
@@ -71,6 +77,8 @@ const ViewItem = () => {
       setItems(transformedItems);
     } catch (error) {
       console.error('Failed to load items:', error);
+      console.error('Error details:', error.message);
+      console.error('Error stack:', error.stack);
       setItems([]);
     }
     setLoading(false);
