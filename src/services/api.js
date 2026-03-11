@@ -44,40 +44,69 @@ const apiRequest = async (endpoint, options = {}) => {
 
 // Authentication API
 export const authAPI = {
-
+  // Send OTP to email
   sendOtp: async (email) => {
-    return await apiRequest('/api/auth/send-otp', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email
-      })
-    });
+    try {
+      console.log('Sending OTP to:', email);
+      const response = await apiRequest('/api/auth/send-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      });
+      console.log('OTP sent successfully:', response);
+      return response;
+    } catch (error) {
+      console.error('Send OTP error:', error);
+      throw error;
+    }
   },
 
+  // Verify OTP
   verifyOtp: async (email, otp) => {
-    return await apiRequest('/api/auth/verify-otp', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email,
-        otp: otp
-      })
-    });
+    try {
+      console.log('Verifying OTP for:', email);
+      const response = await apiRequest('/api/auth/verify-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email, otp }),
+      });
+      console.log('OTP verified successfully:', response);
+      return response;
+    } catch (error) {
+      console.error('Verify OTP error:', error);
+      throw error;
+    }
   },
 
+  // Register new user (with OTP verification)
   register: async (userData) => {
-    return await apiRequest('/api/auth/register', {
-      method: 'POST',
-      body: JSON.stringify(userData)
-    });
+    try {
+      console.log('Registering user:', userData.email);
+      const response = await apiRequest('/api/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+      });
+      console.log('Registration successful:', response);
+      return response;
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
   },
 
+  // Login user
   login: async (credentials) => {
-    return await apiRequest('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify(credentials)
-    });
+    try {
+      console.log('Logging in user:', credentials.email);
+      const response = await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify(credentials),
+      });
+      console.log('Login successful:', response);
+      return response;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   }
-
 };
 
 // Items API
