@@ -54,12 +54,13 @@ try{
 
 await authAPI.verifyOtp(formData.email,otp);
 
-alert("OTP verified");
+alert("OTP verified successfully");
 
 setOtpVerified(true);
 
 }catch(err){
 
+console.error(err);
 alert("Invalid OTP");
 
 }
@@ -71,7 +72,7 @@ const handleSubmit=async(e)=>{
 e.preventDefault();
 
 if(!otpVerified){
-alert("Please verify OTP first");
+alert("Verify OTP first");
 return;
 }
 
