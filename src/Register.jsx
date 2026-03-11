@@ -19,22 +19,15 @@ year:""
 const [otp,setOtp] = useState("");
 const [otpSent,setOtpSent] = useState(false);
 const [otpVerified,setOtpVerified] = useState(false);
-const [loading,setLoading] = useState(false);
 
 const handleChange = (e)=>{
-setFormData({
-...formData,
-[e.target.name]:e.target.value
-});
+setFormData({...formData,[e.target.name]:e.target.value});
 };
 
-// SEND OTP
 const handleSendOtp = async ()=>{
 
 ```
 try{
-
-  setLoading(true);
 
   await authAPI.sendOtp(formData.email);
 
@@ -48,13 +41,10 @@ try{
   alert("Failed to send OTP");
 
 }
-
-setLoading(false);
 ```
 
 };
 
-// VERIFY OTP
 const handleVerifyOtp = async ()=>{
 
 ```
@@ -62,7 +52,7 @@ try{
 
   await authAPI.verifyOtp(formData.email,otp);
 
-  alert("OTP verified successfully");
+  alert("OTP verified");
 
   setOtpVerified(true);
 
@@ -75,7 +65,6 @@ try{
 
 };
 
-// REGISTER
 const handleSubmit = async(e)=>{
 
 ```
@@ -88,14 +77,7 @@ if(!otpVerified){
 
 try{
 
-  await authAPI.register({
-    fullName:formData.fullName,
-    email:formData.email,
-    password:formData.password,
-    contactNumber:formData.contactNumber,
-    department:formData.department,
-    year:formData.year
-  });
+  await authAPI.register(formData);
 
   alert("Registration successful");
 
@@ -103,7 +85,6 @@ try{
 
 }catch(err){
 
-  console.error(err);
   alert("Registration failed");
 
 }
@@ -111,7 +92,7 @@ try{
 
 };
 
-return (
+return(
 
 ```
 <div className="register-container">
@@ -159,7 +140,7 @@ return (
 
     {!otpSent && (
       <button type="button" onClick={handleSendOtp}>
-        {loading ? "Sending OTP..." : "Send OTP"}
+        Send OTP
       </button>
     )}
 
