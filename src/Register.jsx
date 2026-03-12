@@ -13,9 +13,6 @@ const Register = () => {
     rollNumber: ''
   });
 
-  const [otp, setOtp] = useState('');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -25,52 +22,9 @@ const Register = () => {
     });
   };
 
-  const handleSendOtp = async () => {
-    if (!formData.email) {
-      alert('Please enter your email first');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await authAPI.sendOtp(formData.email);
-      setOtpSent(true);
-      alert('OTP sent to your email!');
-    } catch (error) {
-      console.error('Send OTP error:', error);
-      alert('Failed to send OTP. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    if (!otp) {
-      alert('Please enter the OTP');
-      return;
-    }
-
-    setLoading(true);
-    try {
-      await authAPI.verifyOtp(formData.email, otp);
-      setOtpVerified(true);
-      alert('OTP verified successfully!');
-    } catch (error) {
-      console.error('Verify OTP error:', error);
-      alert('Invalid OTP. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!otpVerified) {
-      alert('Please verify your email first');
-      return;
-    }
-
     if (formData.password !== formData.confirmPassword) {
       alert('Passwords do not match');
       return;
@@ -197,7 +151,6 @@ const Register = () => {
                     onChange={handleChange}
                     placeholder="your.email@nitkkr.ac.in"
                     required
-                    disabled={otpVerified}
                   />
                 </div>
               </div>
@@ -285,52 +238,11 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Email Verification */}
-            <div className="form-group">
-              <h3>Email Verification</h3>
-              <div className="otp-section">
-                <div className="otp-input-group">
-                  <input
-                    type="text"
-                    value={otp}
-                    onChange={(e) => setOtp(e.target.value)}
-                    placeholder="Enter 6-digit OTP"
-                    maxLength={6}
-                    disabled={otpVerified}
-                  />
-                  <button
-                    type="button"
-                    onClick={handleSendOtp}
-                    disabled={otpVerified || loading || !formData.email}
-                    className="otp-btn"
-                  >
-                    {loading ? 'Sending...' : otpSent ? 'Resend OTP' : 'Send OTP'}
-                  </button>
-                </div>
-                {otpSent && !otpVerified && (
-                  <button
-                    type="button"
-                    onClick={handleVerifyOtp}
-                    disabled={loading}
-                    className="verify-btn"
-                  >
-                    {loading ? 'Verifying...' : 'Verify OTP'}
-                  </button>
-                )}
-                {otpVerified && (
-                  <div className="otp-verified">
-                    <span className="verified-icon">✅</span>
-                    Email verified successfully
-                  </div>
-                )}
-              </div>
-            </div>
-
             {/* Submit Button */}
             <div className="form-actions">
               <button
                 type="submit"
-                disabled={loading || !otpVerified}
+                disabled={loading}
                 className="register-btn"
               >
                 {loading ? 'Creating Account...' : '🎉 Create Account'}
