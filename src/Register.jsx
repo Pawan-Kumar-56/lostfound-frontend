@@ -1,304 +1,350 @@
 import React,{useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {authAPI} from "./services/api";
-import "./Register.css";
+import { authAPI } from './services/api';
+import './Register.css';
 
-const Register=()=>{
+const Register = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    department: '',
+    year: '',
+    rollNumber: ''
+  });
 
-const navigate=useNavigate();
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-const[formData,setFormData]=useState({
-fullName:"",
-email:"",
-password:"",
-confirmPassword:"",
-contactNumber:"",
-department:"",
-year:""
-});
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-const[showPassword,setShowPassword]=useState(false);
-const[showConfirmPassword,setShowConfirmPassword]=useState(false);
-const[currentStep,setCurrentStep]=useState(1);
+  const handleSendOtp = async () => {
+    if (!formData.email) {
+      alert('Please enter your email first');
+      return;
+    }
 
-const handleChange=(e)=>{
-setFormData({...formData,[e.target.name]:e.target.value});
-};
+    setLoading(true);
+    try {
+      await authAPI.sendOtp(formData.email);
+      setOtpSent(true);
+      alert('OTP sent to your email!');
+    } catch (error) {
+      console.error('Send OTP error:', error);
+      alert('Failed to send OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const togglePasswordVisibility=(field)=>{
-if(field==='password'){
-setShowPassword(!showPassword);
-}else if(field==='confirmPassword'){
-setShowConfirmPassword(!showConfirmPassword);
-}
-};
+  const handleVerifyOtp = async () => {
+    if (!otp) {
+      alert('Please enter the OTP');
+      return;
+    }
 
-const validateForm=()=>{
-if(!formData.fullName || !formData.email || !formData.password || !formData.confirmPassword || !formData.department || !formData.year){
-return false;
-}
-if(formData.password !== formData.confirmPassword){
-alert("Passwords do not match");
-return false;
-}
-if(formData.password.length < 6){
-alert("Password must be at least 6 characters");
-return false;
-}
-return true;
-};
+    setLoading(true);
+    try {
+      await authAPI.verifyOtp(formData.email, otp);
+      setOtpVerified(true);
+      alert('OTP verified successfully!');
+    } catch (error) {
+      console.error('Verify OTP error:', error);
+      alert('Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const handleSubmit=async(e)=>{
-e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!otpVerified) {
+      alert('Please verify your email first');
+      return;
+    }
 
-if(!validateForm()){
-return;
-}
+    if (formData.password !== formData.confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
 
-try{
-console.log('Registering user:', formData.email);
-await authAPI.register(formData);
+    if (!formData.department || !formData.year) {
+      alert('Please select department and year');
+      return;
+    }
 
-alert("Registration successful! Welcome to NIT KKR Lost & Found Portal 🎉");
+    setLoading(true);
+    try {
+      await authAPI.register({
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        department: formData.department,
+        year: formData.year,
+        rollNumber: formData.rollNumber
+      });
+      alert('Registration successful! Please login.');
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-navigate("/login");
-}catch(err){
-console.error(err);
-alert("Registration failed. Please try again.");
-}
-};
+  return (
+    <div className="register-container">
+      {/* Left Side - Information */}
+      <div className="info-section">
+        <div className="info-content">
+          <div className="logo-section">
+            <h1>🎓 NIT KKR</h1>
+            <h2>Lost & Found Portal</h2>
+          </div>
+          
+          <div className="features-section">
+            <h3>🌟 Why Join Our Community?</h3>
+            <div className="feature-grid">
+              <div className="feature-item">
+                <div className="feature-icon">📱</div>
+                <h4>Instant Notifications</h4>
+                <p>Get real-time alerts for lost & found items</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🔍</div>
+                <h4>Smart Search</h4>
+                <p>Advanced filtering by department & location</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">💬</div>
+                <h4>Direct Chat</h4>
+                <p>Message item owners directly</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🏫</div>
+                <h4>Verified Users</h4>
+                <p>Only NIT KKR students & faculty</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">📊</div>
+                <h4>High Success Rate</h4>
+                <p>85%+ items successfully returned</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🎯</div>
+                <h4>Easy to Use</h4>
+                <p>Simple interface for quick reporting</p>
+              </div>
+            </div>
+          </div>
 
-const nextStep=()=>{
-if(currentStep===1 && formData.fullName && formData.email){
-setCurrentStep(2);
-}else if(currentStep===2 && formData.password && formData.confirmPassword && formData.department && formData.year){
-setCurrentStep(3);
-}
-};
+          <div className="stats-section">
+            <div className="stat-item">
+              <h4>2,500+</h4>
+              <p>Active Users</p>
+            </div>
+            <div className="stat-item">
+              <h4>1,800+</h4>
+              <p>Items Found</p>
+            </div>
+            <div className="stat-item">
+              <h4>85%</h4>
+              <p>Success Rate</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-const prevStep=()=>{
-if(currentStep>1){
-setCurrentStep(currentStep-1);
-}
-};
+      {/* Right Side - Registration Form */}
+      <div className="form-section">
+        <div className="form-container">
+          <div className="form-header">
+            <h2>Create Account</h2>
+            <p>Join our NIT KKR Lost & Found community</p>
+          </div>
 
-return(
-<div className="register-container">
-<div className="register-card">
-<div className="register-header">
-<h2>Join NIT KKR Lost & Found</h2>
-<p>Connect with your campus community</p>
-<div className="step-indicator">
-<div className={`step ${currentStep>=1 ? 'active' : ''}`}>
-<span>1</span>
-<small>Personal Info</small>
-</div>
-<div className={`step ${currentStep>=2 ? 'active' : ''}`}>
-<span>2</span>
-<small>Account Setup</small>
-</div>
-<div className={`step ${currentStep>=3 ? 'active' : ''}`}>
-<span>3</span>
-<small>Additional Details</small>
-</div>
-</div>
-</div>
+          <form onSubmit={handleSubmit} className="register-form">
+            {/* Personal Information */}
+            <div className="form-group">
+              <h3>Personal Information</h3>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Full Name *</label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Email Address *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your.email@nitkkr.ac.in"
+                    required
+                    disabled={otpVerified}
+                  />
+                </div>
+              </div>
+            </div>
 
-{currentStep===1 && (
-<div className="step-content">
-<h3>👤 Personal Information</h3>
-<p>Let's start with your basic information</p>
-<div className="form-row">
-<div className="form-group">
-<label htmlFor="fullName">Full Name *</label>
-<input
-type="text"
-id="fullName"
-name="fullName"
-value={formData.fullName}
-onChange={handleChange}
-placeholder="Enter your full name"
-required
-className="form-input"
-/>
-</div>
-<div className="form-group">
-<label htmlFor="email">Email Address *</label>
-<input
-type="email"
-id="email"
-name="email"
-value={formData.email}
-onChange={handleChange}
-placeholder="your.email@nitkkr.ac.in"
-required
-className="form-input"
-/>
-</div>
-</div>
-<div className="button-group">
-<button onClick={nextStep} className="next-btn" disabled={!formData.fullName || !formData.email}>
-Continue to Account Setup →
-</button>
-</div>
-</div>
-)}
+            {/* Password Section */}
+            <div className="form-group">
+              <h3>Password Setup</h3>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Password *</label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a strong password"
+                    required
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Confirm Password *</label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="Confirm your password"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
 
-{currentStep===2 && (
-<div className="step-content">
-<h3>🔐 Account Security</h3>
-<p>Create a strong password for your account</p>
-<div className="form-row">
-<div className="form-group">
-<label htmlFor="password">Password *</label>
-<div className="password-input">
-<input
-type={showPassword ? "text" : "password"}
-id="password"
-name="password"
-value={formData.password}
-onChange={handleChange}
-placeholder="Create a strong password"
-required
-className="form-input"
-/>
-<button
-type="button"
-onClick={() => togglePasswordVisibility('password')}
-className="password-toggle"
->
-{showPassword ? '👁️' : '👁️‍🗨️'}
-</button>
-</div>
-<small className="password-hint">Use 8+ characters with mix of letters, numbers & symbols</small>
-</div>
-<div className="form-group">
-<label htmlFor="confirmPassword">Confirm Password *</label>
-<div className="password-input">
-<input
-type={showConfirmPassword ? "text" : "password"}
-id="confirmPassword"
-name="confirmPassword"
-value={formData.confirmPassword}
-onChange={handleChange}
-placeholder="Confirm your password"
-required
-className="form-input"
-/>
-<button
-type="button"
-onClick={() => togglePasswordVisibility('confirmPassword')}
-className="password-toggle"
->
-{showConfirmPassword ? '👁️' : '👁️‍🗨️'}
-</button>
-</div>
-</div>
-</div>
-<div className="button-group">
-<button onClick={prevStep} className="prev-btn">
-← Back
-</button>
-<button onClick={nextStep} className="next-btn" disabled={!formData.password || !formData.confirmPassword || formData.password !== formData.confirmPassword}>
-Continue to Details →
-</button>
-</div>
-</div>
-)}
+            {/* Academic Information */}
+            <div className="form-group">
+              <h3>Academic Information</h3>
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Department *</label>
+                  <select
+                    name="department"
+                    value={formData.department}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Department</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="ECE">Electronics & Communication</option>
+                    <option value="EE">Electrical Engineering</option>
+                    <option value="ME">Mechanical Engineering</option>
+                    <option value="CE">Civil Engineering</option>
+                    <option value="CHE">Chemical Engineering</option>
+                    <option value="BT">Biotechnology</option>
+                    <option value="MME">Metallurgical & Materials</option>
+                  </select>
+                </div>
+                <div className="form-field">
+                  <label>Year *</label>
+                  <select
+                    name="year"
+                    value={formData.year}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Year</option>
+                    <option value="1st">1st Year</option>
+                    <option value="2nd">2nd Year</option>
+                    <option value="3rd">3rd Year</option>
+                    <option value="4th">4th Year</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-field full-width">
+                  <label>Roll Number</label>
+                  <input
+                    type="text"
+                    name="rollNumber"
+                    value={formData.rollNumber}
+                    onChange={handleChange}
+                    placeholder="Enter your roll number (optional)"
+                  />
+                </div>
+              </div>
+            </div>
 
-{currentStep===3 && (
-<div className="step-content">
-<h3>📚 Academic Information</h3>
-<p>Help us connect you with the right campus resources</p>
-<div className="form-row">
-<div className="form-group">
-<label htmlFor="contactNumber">Contact Number</label>
-<input
-type="tel"
-id="contactNumber"
-name="contactNumber"
-value={formData.contactNumber}
-onChange={handleChange}
-placeholder="Your phone number"
-className="form-input"
-/>
-</div>
-<div className="form-group">
-<label htmlFor="department">Department *</label>
-<select
-id="department"
-name="department"
-value={formData.department}
-onChange={handleChange}
-className="form-input"
->
-<option value="">Select Department</option>
-<option value="CSE">Computer Science</option>
-<option value="ECE">Electronics</option>
-<option value="ME">Mechanical</option>
-<option value="CE">Civil</option>
-<option value="EE">Electrical</option>
-<option value="IT">Information Technology</option>
-</select>
-</div>
-<div className="form-group">
-<label htmlFor="year">Year *</label>
-<select
-id="year"
-name="year"
-value={formData.year}
-onChange={handleChange}
-className="form-input"
->
-<option value="">Select Year</option>
-<option value="1st">1st Year</option>
-<option value="2nd">2nd Year</option>
-<option value="3rd">3rd Year</option>
-<option value="4th">4th Year</option>
-</select>
-</div>
-</div>
-<div className="button-group">
-<button onClick={prevStep} className="prev-btn">
-← Back
-</button>
-<button onClick={handleSubmit} className="register-btn" disabled={!formData.department || !formData.year}>
-🎉 Create Account
-</button>
-</div>
-</div>
-)}
+            {/* Email Verification */}
+            <div className="form-group">
+              <h3>Email Verification</h3>
+              <div className="otp-section">
+                <div className="otp-input-group">
+                  <input
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    placeholder="Enter 6-digit OTP"
+                    maxLength={6}
+                    disabled={otpVerified}
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSendOtp}
+                    disabled={otpVerified || loading || !formData.email}
+                    className="otp-btn"
+                  >
+                    {loading ? 'Sending...' : otpSent ? 'Resend OTP' : 'Send OTP'}
+                  </button>
+                </div>
+                {otpSent && !otpVerified && (
+                  <button
+                    type="button"
+                    onClick={handleVerifyOtp}
+                    disabled={loading}
+                    className="verify-btn"
+                  >
+                    {loading ? 'Verifying...' : 'Verify OTP'}
+                  </button>
+                )}
+                {otpVerified && (
+                  <div className="otp-verified">
+                    <span className="verified-icon">✅</span>
+                    Email verified successfully
+                  </div>
+                )}
+              </div>
+            </div>
 
-<div className="info-section">
-<div className="info-card">
-<h4>🌟 Why Join Our Community?</h4>
-<ul>
-<li>📱 <strong>Instant Notifications:</strong> Get alerts for lost & found items</li>
-<li>🔍 <strong>Smart Search:</strong> Advanced filtering by department & location</li>
-<li>💬 <strong>Direct Chat:</strong> Message item owners directly</li>
-<li>🏫 <strong>Verified Users:</strong> Only NIT KKR students & faculty</li>
-<li>📊 <strong>Success Rate:</strong> 85%+ items successfully returned</li>
-</ul>
-</div>
-<div className="info-card">
-<h4>🎯 How It Works</h4>
-<ol>
-<li><strong>Register:</strong> Create your account in 30 seconds</li>
-<li><strong>Report:</strong> Post lost items with photos & details</li>
-<li><strong>Search:</strong> Browse items by category or keyword</li>
-<li><strong>Connect:</strong> Chat with owners to arrange pickup</li>
-<li><strong>Resolve:</strong> Mark items as found & returned</li>
-</ol>
-</div>
-</div>
+            {/* Submit Button */}
+            <div className="form-actions">
+              <button
+                type="submit"
+                disabled={loading || !otpVerified}
+                className="register-btn"
+              >
+                {loading ? 'Creating Account...' : '🎉 Create Account'}
+              </button>
+            </div>
+          </form>
 
-<div className="login-link">
-Already have an account? <a href="/login">Sign In</a>
-</div>
-</div>
-</div>
-);
-
+          <div className="login-link">
+            Already have an account? <a href="/login">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Register;
