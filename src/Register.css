@@ -148,11 +148,11 @@ body {
 }
 
 .feature-item {
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
   backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(255, 0, 110, 0.2);
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -216,11 +216,11 @@ body {
 .stats-section {
   display: flex;
   justify-content: space-around;
-  background: var(--bg-glass);
+  background: linear-gradient(135deg, rgba(58, 134, 255, 0.1) 0%, rgba(0, 245, 255, 0.1) 100%);
   backdrop-filter: blur(20px);
   padding: 2.5rem;
   border-radius: 20px;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(58, 134, 255, 0.2);
   position: relative;
   overflow: hidden;
 }
