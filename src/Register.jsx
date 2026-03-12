@@ -115,19 +115,9 @@ const Register = () => {
             <h3>🌟 Why Join Our Community?</h3>
             <div className="feature-grid">
               <div className="feature-item">
-                <div className="feature-icon">📱</div>
-                <h4>Instant Notifications</h4>
-                <p>Get real-time alerts for lost & found items</p>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">🔍</div>
+                <div className="feature-icon">�</div>
                 <h4>Smart Search</h4>
                 <p>Advanced filtering by department & location</p>
-              </div>
-              <div className="feature-item">
-                <div className="feature-icon">💬</div>
-                <h4>Direct Chat</h4>
-                <p>Message item owners directly</p>
               </div>
               <div className="feature-item">
                 <div className="feature-icon">🏫</div>
@@ -135,14 +125,24 @@ const Register = () => {
                 <p>Only NIT KKR students & faculty</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">📊</div>
+                <div className="feature-icon">�</div>
                 <h4>High Success Rate</h4>
                 <p>85%+ items successfully returned</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🎯</div>
+                <div className="feature-icon">�</div>
                 <h4>Easy to Use</h4>
                 <p>Simple interface for quick reporting</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">�</div>
+                <h4>Photo Upload</h4>
+                <p>Upload images for better identification</p>
+              </div>
+              <div className="feature-item">
+                <div className="feature-icon">🔐</div>
+                <h4>Secure Platform</h4>
+                <p>Your data is safe and private</p>
               </div>
             </div>
           </div>
