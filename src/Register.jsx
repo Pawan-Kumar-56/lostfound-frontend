@@ -16,68 +16,13 @@ department:"",
 year:""
 });
 
-const[otp,setOtp]=useState("");
-const[otpSent,setOtpSent]=useState(false);
-const[otpVerified,setOtpVerified]=useState(false);
-
 const handleChange=(e)=>{
 setFormData({...formData,[e.target.name]:e.target.value});
-};
-
-const handleSendOtp = async () => {
-  if (!formData.email) {
-    alert("Please enter your email address first");
-    return;
-  }
-
-  // Validate email format
-  if (!formData.email.includes('@')) {
-    alert("Please enter a valid email address");
-    return;
-  }
-
-  try {
-    console.log('Sending OTP to:', formData.email);
-    const response = await authAPI.sendOtp(formData.email);
-    
-    console.log('OTP Response:', response);
-    
-    alert("OTP sent to your email. Please check your inbox (including spam folder).");
-    
-    setOtpSent(true);
-  } catch (error) {
-    console.error('Send OTP Error:', error);
-    alert(`Failed to send OTP: ${error.message || 'Please try again later'}`);
-  }
-};
-
-const handleVerifyOtp=async()=>{
-
-try{
-
-await authAPI.verifyOtp(formData.email,otp);
-
-alert("OTP verified successfully");
-
-setOtpVerified(true);
-
-}catch(err){
-
-console.error(err);
-alert("Invalid OTP");
-
-}
-
 };
 
 const handleSubmit=async(e)=>{
 
 e.preventDefault();
-
-if(!otpVerified){
-alert("Verify OTP first");
-return;
-}
 
 try{
 
@@ -130,30 +75,8 @@ return(
               placeholder="your.email@nitkkr.ac.in"
               required
             />
-            <button type="button" onClick={handleSendOtp} className="otp-btn">
-              Send OTP
-            </button>
           </div>
         </div>
-
-        {otpSent && (
-          <div className="form-group">
-            <label htmlFor="otp">Enter OTP *</label>
-            <input
-              type="text"
-              id="otp"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter 6-digit OTP"
-              maxLength={6}
-              required
-            />
-            <button type="button" onClick={handleVerifyOtp} className="otp-btn verify">
-              Verify OTP
-            </button>
-            {otpVerified && <span className="verified">✓ Verified</span>}
-          </div>
-        )}
 
         <div className="form-row">
           <div className="form-group">
@@ -218,7 +141,7 @@ return(
           </div>
         </div>
 
-        <button type="submit" className="register-btn" disabled={!otpVerified}>
+        <button type="submit" className="register-btn">
           Create Account
         </button>
         
