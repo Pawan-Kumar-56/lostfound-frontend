@@ -1,8 +1,6 @@
 /* Register Page Styles - Beautiful Multi-Step Registration */
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+/* Use System Fonts Instead of Google Fonts */
 /* Variables */
 :root {
   --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -90,7 +88,7 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-fill-color: transparent;
+  color: transparent;
 }
 
 .register-header p {
