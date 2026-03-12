@@ -297,7 +297,6 @@ Already have an account? <a href="/login">Sign In</a>
 </div>
 </div>
 </div>
-</div>
 );
 
 };
