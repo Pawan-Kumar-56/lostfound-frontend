@@ -6,9 +6,10 @@
   --bg-secondary: #0a0a0a;
   --bg-tertiary: #1a1a1a;
   --bg-glass: rgba(255, 255, 255, 0.05);
-  --text-primary: #ffffff;
-  --text-secondary: #e0e0e0;
-  --text-muted: #a0a0a0;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b8b8b8;
+  --text-muted: #808080;
+  --text-accent: #e0e0e0;
   --accent-primary: #ff006e;
   --accent-secondary: #fb5607;
   --accent-tertiary: #ffbe0b;
@@ -22,6 +23,7 @@
   --gradient-secondary: linear-gradient(135deg, #00f5ff 0%, #00d4ff 100%);
   --gradient-tertiary: linear-gradient(135deg, #ffbe0b 0%, #fb5607 100%);
   --gradient-rainbow: linear-gradient(135deg, #ff006e 0%, #fb5607 25%, #ffbe0b 50%, #00f5ff 75%, #8338ec 100%);
+  --gradient-text: linear-gradient(135deg, #f0f0f0 0%, #d0d0d0 50%, #b0b0b0 100%);
 }
 
 * {
@@ -201,9 +203,14 @@ body {
 
 .feature-item p {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--text-accent);
   line-height: 1.5;
   opacity: 0.9;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
 }
 
 .stats-section {
@@ -252,10 +259,14 @@ body {
 
 .stat-item p {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: var(--text-accent);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 1px;
+  background: var(--gradient-secondary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Right Side - Form Section */
@@ -309,9 +320,13 @@ body {
 
 .form-header p {
   font-size: 1.2rem;
-  color: var(--text-secondary);
+  color: var(--text-accent);
   font-weight: 400;
   opacity: 0.9;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .register-form {
@@ -352,10 +367,14 @@ body {
 .form-field label {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--text-accent);
   margin-bottom: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .form-field input,
@@ -589,9 +608,13 @@ body {
 /* Login Link */
 .login-link {
   text-align: center;
-  margin-top: 2rem;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+  margin-top: 2.5rem;
+  color: var(--text-accent);
+  font-size: 1.1rem;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .login-link a {
