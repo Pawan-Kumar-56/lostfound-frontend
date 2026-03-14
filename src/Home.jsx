@@ -190,8 +190,11 @@ const Home = () => {
         <div className="section-header">
           <h2 className="section-title">What People Say</h2>
           <p className="section-subtitle">Real stories from our community</p>
+          <button onClick={() => navigate('/reviews')} className="view-all-btn">
+            View All Reviews →
+          </button>
         </div>
-        <div className="testimonials-grid">
+        <div className="testimonials-slider">
           <div className="testimonial-card">
             <div className="testimonial-content">
               <p className="testimonial-text">
