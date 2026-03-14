@@ -70,14 +70,14 @@ const Home = () => {
             </div>
             <div className="hero-card">
               <div className="card-header">
-                <div className="card-icon">📱</div>
-                <div className="card-title">Mobile App</div>
+                <div className="card-icon">🌐</div>
+                <div className="card-title">Web Platform</div>
               </div>
               <div className="card-content">
-                <p>Access anywhere, anytime</p>
+                <p>Access from any device, anywhere</p>
                 <div className="card-stats">
-                  <span>⭐ 4.8 Rating</span>
-                  <span>📱 10K+ Downloads</span>
+                  <span>⭐ 4.8 User Rating</span>
+                  <span>� Responsive Design</span>
                 </div>
               </div>
             </div>
@@ -140,38 +140,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="stats-section">
-        <div className="stats-background"></div>
-        <div className="stats-content">
-          <div className="section-header">
-            <h2 className="section-title">Making a Difference</h2>
-            <p className="section-subtitle">See how we're helping the NIT KKR community</p>
-          </div>
-          <div className="stats-slider">
-            <div className="stat-card">
-              <div className="stat-number">2,500+</div>
-              <div className="stat-label">Active Users</div>
-              <div className="stat-description">Students and faculty members</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">1,800+</div>
-              <div className="stat-label">Items Returned</div>
-              <div className="stat-description">Successfully reunited</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">85%</div>
-              <div className="stat-label">Success Rate</div>
-              <div className="stat-description">Items recovered within 48 hours</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-number">24/7</div>
-              <div className="stat-label">Availability</div>
-              <div className="stat-description">Always here to help</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Statistics Section - REMOVED to avoid repetition */}
 
       {/* How It Works Section */}
       <section className="how-section">
