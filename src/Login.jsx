@@ -127,89 +127,121 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="login-card">
-        <div className="login-header">
-          <h1>Welcome Back</h1>
-          <p>Lost & Found Portal - NIT Kurukshetra</p>
+      {/* Left Section - Image and Text */}
+      <div className="login-left">
+        <div className="overlay">
+          <div className="content">
+            <h1>NIT KKR Lost & Found Portal</h1>
+            <p className="tagline">Reuniting Lost Items with Their Owners</p>
+            <p className="description">
+              Our comprehensive lost and found system helps the NIT Kurukshetra community 
+              track and recover misplaced items. Report lost items, submit found items, 
+              and browse through our database to find what you're looking for.
+            </p>
+            <div className="features">
+              <div className="feature">
+                <span className="icon">🔍</span>
+                <span>Search Lost Items</span>
+              </div>
+              <div className="feature">
+                <span className="icon">📦</span>
+                <span>Report Found Items</span>
+              </div>
+              <div className="feature">
+                <span className="icon">🔔</span>
+                <span>Get Notifications</span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <form onSubmit={handleSubmit} className="login-form">
-          {/* Email */}
-          <div className="form-group">
-            <label htmlFor="email">Email Address</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className={errors.email ? 'error' : ''}
-              placeholder="your.email@nitkkr.ac.in"
-              autoComplete="email"
-            />
-            {errors.email && <span className="error-message">{errors.email}</span>}
+      {/* Right Section - Login Form */}
+      <div className="login-right">
+        <div className="login-card">
+          <div className="login-header">
+            <h1>Welcome Back</h1>
+            <p>Lost & Found Portal - NIT Kurukshetra</p>
           </div>
 
-          {/* Password */}
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <div className="password-input">
+          <form onSubmit={handleSubmit} className="login-form">
+            {/* Email */}
+            <div className="form-group">
+              <label htmlFor="email">Email Address</label>
               <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                name="password"
-                value={formData.password}
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                className={errors.password ? 'error' : ''}
-                placeholder="Enter your password"
-                autoComplete="current-password"
+                className={errors.email ? 'error' : ''}
+                placeholder="your.email@nitkkr.ac.in"
+                autoComplete="email"
               />
+              {errors.email && <span className="error-message">{errors.email}</span>}
+            </div>
+
+            {/* Password */}
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-input">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className={errors.password ? 'error' : ''}
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={togglePassword}
+                >
+                  {showPassword ? '👁️' : '👁️‍🗨️'}
+                </button>
+              </div>
+              {errors.password && <span className="error-message">{errors.password}</span>}
+            </div>
+
+            {/* Remember Me & Forgot Password */}
+            <div className="form-options">
+              <div className="remember-me">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleChange}
+                />
+                <label htmlFor="rememberMe">Remember me</label>
+              </div>
               <button
                 type="button"
-                className="password-toggle"
-                onClick={togglePassword}
+                className="forgot-password"
+                onClick={handleForgotPassword}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                Forgot password?
               </button>
             </div>
-            {errors.password && <span className="error-message">{errors.password}</span>}
-          </div>
 
-          {/* Remember Me & Forgot Password */}
-          <div className="form-options">
-            <div className="remember-me">
-              <input
-                type="checkbox"
-                id="rememberMe"
-                name="rememberMe"
-                checked={formData.rememberMe}
-                onChange={handleChange}
-              />
-              <label htmlFor="rememberMe">Remember me</label>
-            </div>
+            {/* Submit Button */}
             <button
-              type="button"
-              className="forgot-password"
-              onClick={handleForgotPassword}
+              type="submit"
+              className="submit-btn"
+              disabled={loading}
             >
-              Forgot password?
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
-          </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="submit-btn"
-            disabled={loading}
-          >
-            {loading ? 'Signing in...' : 'Sign In'}
-          </button>
-
-          {/* Register Link */}
-          <div className="register-link">
-            Don't have an account? <button type="button" onClick={() => navigate('/register')}>Register here</button>
-          </div>
-        </form>
+            {/* Register Link */}
+            <div className="register-link">
+              Don't have an account? <button type="button" onClick={() => navigate('/register')}>Register here</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
