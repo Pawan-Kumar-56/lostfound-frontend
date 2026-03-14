@@ -1,7 +1,7 @@
-/* Post Item Page Styles */
+/* Post Item Page Styles - Dark Theme */
 .post-item-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,13 +9,15 @@
 }
 
 .post-item-card {
-  background: white;
+  background: #1e1e2e;
+  border: 1px solid #2a2a3e;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   padding: 3rem 2rem;
   width: 100%;
   max-width: 600px;
   animation: slideUp 0.5s ease;
+  margin: 0 auto;
 }
 
 @keyframes slideUp {
@@ -35,14 +37,15 @@
 }
 
 .post-item-header h1 {
-  color: #1e3c72;
+  color: #ffffff;
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .post-item-header p {
-  color: #666;
+  color: #b8b8c8;
   font-size: 1rem;
   font-weight: 500;
 }
@@ -60,7 +63,7 @@
 }
 
 .form-group label {
-  color: #1e3c72;
+  color: #ffffff;
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.3px;
@@ -70,12 +73,12 @@
 .form-group select,
 .form-group textarea {
   padding: 1rem;
-  border: 2px solid #e1e8ed;
+  border: 2px solid #2a2a3e;
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background-color: #ffffff;
-  color: #333333;
+  background-color: #2a2a3e;
+  color: #ffffff;
   display: block;
   width: 100%;
   visibility: visible;
@@ -87,17 +90,17 @@
 .form-group textarea:focus {
   outline: none;
   border-color: #667eea;
-  background-color: #ffffff;
-  color: #333333;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: #3a3a4e;
+  color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .form-group input.error,
 .form-group select.error,
 .form-group textarea.error {
   border-color: #ff6b6b;
-  background-color: #fff5f5;
-  color: #333333;
+  background-color: #3a2a2e;
+  color: #ffffff;
 }
 
 .error-message {
@@ -131,22 +134,26 @@
 .radio-label {
   display: block;
   padding: 1rem;
-  border: 2px solid #e1e8ed;
+  border: 2px solid #2a2a3e;
   border-radius: 10px;
   text-align: center;
   font-weight: 600;
   transition: all 0.3s ease;
   cursor: pointer;
+  background: #2a2a3e;
+  color: #b8b8c8;
 }
 
 .radio-option input[type="radio"]:checked + .radio-label {
   border-color: #667eea;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
 .radio-label.lost {
-  border-color: #ff6b6b;
+  border-color: #2a2a3e;
 }
 
 .radio-option input[type="radio"]:checked + .radio-label.lost {
@@ -155,7 +162,7 @@
 }
 
 .radio-label.found {
-  border-color: #28a745;
+  border-color: #2a2a3e;
 }
 
 .radio-option input[type="radio"]:checked + .radio-label.found {
@@ -194,7 +201,7 @@
 
 .image-note {
   font-size: 0.85rem;
-  color: #666;
+  color: #b8b8c8;
 }
 
 .image-preview {
@@ -207,7 +214,7 @@
   max-width: 200px;
   max-height: 200px;
   border-radius: 10px;
-  border: 2px solid #e1e8ed;
+  border: 2px solid #2a2a3e;
   object-fit: cover;
 }
 
@@ -256,28 +263,29 @@
 }
 
 .cancel-btn {
-  background: #6c757d;
-  color: white;
+  background: #4a4a5e;
+  color: #b8b8c8;
+  border: 1px solid #5a5a6e;
 }
 
 .cancel-btn:hover {
-  background: #5a6268;
+  background: #5a5a6e;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+  box-shadow: 0 5px 15px rgba(74, 74, 94, 0.3);
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
 .submit-btn:disabled {
-  background: #ccc;
+  background: #4a4a5e;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;

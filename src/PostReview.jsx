@@ -5,13 +5,9 @@ import './PostReview.css';
 const PostReview = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
     rating: 5,
     title: '',
-    review: '',
-    department: '',
-    year: ''
+    review: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -35,16 +31,6 @@ const PostReview = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!formData.email.endsWith('@nitkkr.ac.in')) {
-      newErrors.email = 'Only NIT KKR email addresses are allowed';
-    }
     
     if (!formData.title.trim()) {
       newErrors.title = 'Review title is required';
@@ -119,8 +105,10 @@ const PostReview = () => {
       {/* Header */}
       <header className="post-review-header">
         <div className="header-content">
-          <h1 className="page-title">Post Your Review</h1>
-          <p className="page-subtitle">Share your experience with the Lost & Found Portal</p>
+          <div className="header-left">
+            <h1 className="page-title">Post Your Review</h1>
+            <p className="page-subtitle">Share your experience with Lost & Found Portal</p>
+          </div>
           <button onClick={handleBack} className="back-btn">
             ← Back to Dashboard
           </button>
@@ -132,123 +120,62 @@ const PostReview = () => {
         <div className="post-review-container">
           <div className="form-section">
             <div className="section-header">
-              <h2 className="section-title">Write Your Review</h2>
-              <p className="section-description">
-                Help others by sharing your experience with our platform
-              </p>
+              <div className="section-icon">📝</div>
+              <div className="section-text">
+                <h2 className="section-title">Write Your Review</h2>
+                <h3 className="section-subtitle">Take Your Review</h3>
+                <p className="section-description">
+                  Help others by sharing your experience with our platform
+                </p>
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="review-form">
-              {/* Personal Information */}
-              <div className="form-section">
-                <h3 className="form-section-title">Personal Information</h3>
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label htmlFor="name">Full Name *</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={errors.name ? 'error' : ''}
-                      placeholder="Enter your full name"
-                    />
-                    {errors.name && <span className="error-message">{errors.name}</span>}
+              {/* Review Details Only */}
+              <div className="review-details-container">
+                <div className="form-section">
+                  <div className="form-section-header">
+                    <div className="form-section-icon">⭐</div>
+                    <h3 className="form-section-title">Review Details</h3>
                   </div>
-
-                  <div className="form-group">
-                    <label htmlFor="email">Email Address *</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={errors.email ? 'error' : ''}
-                      placeholder="your.email@nitkkr.ac.in"
-                    />
-                    {errors.email && <span className="error-message">{errors.email}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="department">Department</label>
-                    <select
-                      id="department"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                      className="form-select"
-                    >
-                      <option value="">Select Department</option>
-                      <option value="CSE">Computer Science</option>
-                      <option value="ECE">Electronics</option>
-                      <option value="ME">Mechanical</option>
-                      <option value="CE">Civil</option>
-                      <option value="EE">Electrical</option>
-                      <option value="CHE">Chemical</option>
-                      <option value="MATH">Mathematics</option>
-                      <option value="PHY">Physics</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="year">Year</label>
-                    <select
-                      id="year"
-                      name="year"
-                      value={formData.year}
-                      onChange={handleChange}
-                      className="form-select"
-                    >
-                      <option value="">Select Year</option>
-                      <option value="1st">1st Year</option>
-                      <option value="2nd">2nd Year</option>
-                      <option value="3rd">3rd Year</option>
-                      <option value="4th">4th Year</option>
-                      <option value="passed">Passed Out</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Review Content */}
-              <div className="form-section">
-                <h3 className="form-section-title">Review Details</h3>
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label htmlFor="title">Review Title *</label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleChange}
-                      className={errors.title ? 'error' : ''}
-                      placeholder="Summarize your experience"
-                    />
-                    {errors.title && <span className="error-message">{errors.title}</span>}
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="rating">Rating</label>
-                    <div className="rating-container">
-                      {renderStars(formData.rating)}
+                  <div className="form-grid-horizontal">
+                    <div className="form-group">
+                      <label htmlFor="title">Review Title *</label>
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        className={errors.title ? 'error' : ''}
+                        placeholder="Summarize your experience"
+                      />
+                      {errors.title && <span className="error-message">{errors.title}</span>}
                     </div>
-                  </div>
 
-                  <div className="form-group full-width">
-                    <label htmlFor="review">Your Review *</label>
-                    <textarea
-                      id="review"
-                      name="review"
-                      value={formData.review}
-                      onChange={handleChange}
-                      className={errors.review ? 'error' : ''}
-                      placeholder="Share your detailed experience with the Lost & Found Portal..."
-                      rows="6"
-                    />
-                    {errors.review && <span className="error-message">{errors.review}</span>}
+                    <div className="form-group">
+                      <label htmlFor="rating">Rating</label>
+                      <div className="rating-container">
+                        <div className="rating-stars">
+                          {renderStars(formData.rating)}
+                        </div>
+                        <span className="rating-text">{formData.rating} out of 5</span>
+                      </div>
+                    </div>
+
+                    <div className="form-group full-width">
+                      <label htmlFor="review">Your Review *</label>
+                      <textarea
+                        id="review"
+                        name="review"
+                        value={formData.review}
+                        onChange={handleChange}
+                        className={errors.review ? 'error' : ''}
+                        placeholder="Share your detailed experience with the Lost & Found Portal..."
+                        rows="8"
+                      />
+                      {errors.review && <span className="error-message">{errors.review}</span>}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -260,7 +187,8 @@ const PostReview = () => {
                   className="submit-btn"
                   disabled={loading}
                 >
-                  {loading ? 'Posting Review...' : '📝 Post Review'}
+                  <span className="btn-icon">📝</span>
+                  <span className="btn-text">{loading ? 'Posting Review...' : 'Post Review'}</span>
                 </button>
               </div>
             </form>
