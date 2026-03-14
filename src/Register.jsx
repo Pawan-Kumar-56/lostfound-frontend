@@ -103,7 +103,7 @@ const Register = () => {
             </div>
           </div>
 
-          <div className="stats-section">
+          <div className="stats-section1">
             <div className="stat-item">
               <h4>2,500+</h4>
               <p>Active Users</p>

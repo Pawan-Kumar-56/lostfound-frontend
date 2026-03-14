@@ -226,7 +226,7 @@ body {
   font-weight: 500;
 }
 
-.stats-section {
+.stats-section1 {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -240,7 +240,7 @@ body {
   overflow: hidden;
 }
 
-.stats-section::before {
+.stats-section1::before {
   content: '';
   position: absolute;
   top: 0;
