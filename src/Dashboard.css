@@ -130,9 +130,9 @@
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2.5rem;
-  max-width: 800px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -215,6 +215,24 @@
 .card-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(30, 60, 114, 0.3);
+}
+
+/* Review Button Styles */
+.review-btn {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+
+.review-btn:hover {
+  box-shadow: 0 8px 20px rgba(243, 156, 18, 0.3);
+}
+
+/* Reviews Button Styles */
+.reviews-btn {
+  background: linear-gradient(135deg, #8e44ad 0%, #5f27cd 100%);
+}
+
+.reviews-btn:hover {
+  box-shadow: 0 8px 20px rgba(142, 68, 173, 0.3);
 }
 
 .post-btn {

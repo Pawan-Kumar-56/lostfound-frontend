@@ -58,6 +58,15 @@ const Dashboard = () => {
     navigate('/viewitems');
   };
 
+  const handlePostReview = () => {
+    // For now, show alert since backend will be updated later
+    alert('Review posting feature will be available soon! Backend integration in progress.');
+  };
+
+  const handleViewReviews = () => {
+    navigate('/reviews');
+  };
+
   return (
     <div className="dashboard">
       {/* Top Navigation Bar */}
@@ -114,6 +123,30 @@ const Dashboard = () => {
               </p>
               <button className="card-btn view-btn" onClick={handleViewItems}>
                 View Items
+              </button>
+            </div>
+
+            {/* Card 3: Post Review */}
+            <div className="dashboard-card">
+              <div className="card-icon">⭐</div>
+              <h2 className="card-title">Post Review</h2>
+              <p className="card-description">
+                Share your experience and help others.
+              </p>
+              <button className="card-btn review-btn" onClick={handlePostReview}>
+                Post Review
+              </button>
+            </div>
+
+            {/* Card 4: View Reviews */}
+            <div className="dashboard-card">
+              <div className="card-icon">📝</div>
+              <h2 className="card-title">View Reviews</h2>
+              <p className="card-description">
+                Read what others are saying about our platform.
+              </p>
+              <button className="card-btn reviews-btn" onClick={handleViewReviews}>
+                View Reviews
               </button>
             </div>
           </div>
