@@ -7,6 +7,7 @@ import Dashboard from './Dashboard';
 import PostItem from './PostItem';
 import ViewItem from './ViewItem';
 import Reviews from './Reviews';
+import PostReview from './PostReview';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/postitem" element={<PostItem />} />
         <Route path="/viewitems" element={<ViewItem />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/postreview" element={<PostReview />} />
       </Routes>
     </BrowserRouter>
   );

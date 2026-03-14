@@ -59,8 +59,7 @@ const Dashboard = () => {
   };
 
   const handlePostReview = () => {
-    // For now, show alert since backend will be updated later
-    alert('Review posting feature will be available soon! Backend integration in progress.');
+    navigate('/postreview');
   };
 
   const handleViewReviews = () => {
