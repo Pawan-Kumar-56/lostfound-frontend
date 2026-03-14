@@ -79,10 +79,6 @@ const Dashboard = () => {
     navigate('/viewitems');
   };
 
-  const handleMyPosts = () => {
-    navigate('/myposts');
-  };
-
   const handlePostReview = () => {
     navigate('/postreview');
   };
@@ -189,19 +185,7 @@ const Dashboard = () => {
               </button>
             </div>
 
-            {/* Card 4: My Posts */}
-            <div className="dashboard-card my-posts-card">
-              <div className="card-icon">📝</div>
-              <h2 className="card-title">My Reports</h2>
-              <p className="card-description">
-                Track the status of your lost and found reports. Manage updates and communications.
-              </p>
-              <button className="card-btn my-posts-btn" onClick={handleMyPosts}>
-                My Reports
-              </button>
-            </div>
-
-            {/* Card 5: Post Review */}
+            {/* Card 4: Post Review */}
             <div className="dashboard-card post-review-card">
               <div className="card-icon">⭐</div>
               <h2 className="card-title">Post Review</h2>
@@ -242,10 +226,6 @@ const Dashboard = () => {
             <button className="quick-action-btn" onClick={handleViewItems}>
               <span className="quick-action-icon">🔎</span>
               <span className="quick-action-text">Search Database</span>
-            </button>
-            <button className="quick-action-btn" onClick={handleMyPosts}>
-              <span className="quick-action-icon">📋</span>
-              <span className="quick-action-text">My Activity</span>
             </button>
             <button className="quick-action-btn" onClick={handlePostReview}>
               <span className="quick-action-icon">⭐</span>
