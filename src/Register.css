@@ -65,7 +65,8 @@ body {
 /* Left Side - Information Section */
 .info-section {
   width: 50%;
-  background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+  /* Changed from black to a very deep midnight navy to add depth */
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%); 
   padding: 3rem;
   display: flex;
   align-items: center;
@@ -73,6 +74,8 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 2;
+  /* Added a subtle right border to separate it from the form section */
+  border-right: 1px solid rgba(58, 134, 255, 0.1);
 }
 
 .info-section::before {
@@ -148,11 +151,13 @@ body {
 }
 
 .feature-item {
-  background: linear-gradient(135deg, rgba(20, 20, 20, 0.8) 0%, rgba(30, 30, 30, 0.8) 100%);
+  /* Darker background with more transparency for the glass effect */
+  background: rgba(30, 41, 59, 0.5); 
   backdrop-filter: blur(20px);
   padding: 2rem;
   border-radius: 20px;
-  border: 1px solid rgba(255, 0, 110, 0.3);
+  /* Use your primary pink/purple gradient for the border */
+  border: 1px solid rgba(131, 56, 236, 0.3);
   text-align: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
