@@ -469,7 +469,22 @@ body {
 /* How It Works Section */
 .how-section {
   padding: 8rem 2rem;
-  background: var(--light-gradient);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.15) 0%, rgba(131, 56, 236, 0.15) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.how-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 0, 110, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(58, 134, 255, 0.1) 0%, transparent 50%);
+  z-index: -1;
 }
 
 .steps-container {
@@ -480,6 +495,8 @@ body {
   margin: 0 auto;
   gap: 2rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
 .step-card {
@@ -487,17 +504,27 @@ body {
   min-width: 250px;
   text-align: center;
   padding: 3rem 2rem;
-  background: var(--text-white);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.1) 0%, rgba(131, 56, 236, 0.1) 100%);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   position: relative;
   z-index: 1;
+  border: 1px solid rgba(255, 0, 110, 0.2);
+  transition: all 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  background: linear-gradient(135deg, rgba(255, 0, 110, 0.2) 0%, rgba(131, 56, 236, 0.2) 100%);
+  border-color: rgba(255, 0, 110, 0.4);
+  box-shadow: var(--shadow-xl);
 }
 
 .step-number {
   width: 60px;
   height: 60px;
-  background: var(--primary-gradient);
+  background: var(--secondary-gradient);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -506,7 +533,13 @@ body {
   font-weight: 700;
   color: var(--text-white);
   margin: 0 auto 2rem;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.step-card:hover .step-number {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-xl);
 }
 
 .step-title {
@@ -514,6 +547,10 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .step-description {
@@ -524,7 +561,7 @@ body {
 .step-connector {
   flex: 0 0 100px;
   height: 3px;
-  background: var(--primary-gradient);
+  background: var(--secondary-gradient);
   position: relative;
   align-self: center;
 }
@@ -535,7 +572,7 @@ body {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: var(--primary-color);
+  background: var(--secondary-color);
   border-radius: 50%;
   top: 50%;
   transform: translateY(-50%);
