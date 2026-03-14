@@ -152,10 +152,12 @@ body {
 }
 
 .feature-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: row;
   gap: 2rem;
   margin-bottom: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .feature-item {

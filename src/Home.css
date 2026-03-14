@@ -131,13 +131,12 @@ body {
 }
 
 .hero-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   max-width: 1200px;
   padding: 2rem;
+  align-items: center;
   z-index: 1;
 }
 
@@ -1131,8 +1130,9 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-content {
-    padding: 1rem;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
   }
   
   .hero-title {
