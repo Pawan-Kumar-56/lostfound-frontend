@@ -43,7 +43,7 @@ body {
 .register-container {
   display: flex;
   min-height: 100vh;
-  background: #000000;
+  background-color: #000000; /* Force black background */
   position: relative;
 }
 
@@ -99,6 +99,8 @@ body {
   max-width: 600px;
   z-index: 3;
   position: relative;
+  /* Ensure no background is set here, or set it to transparent */
+  background: transparent; 
 }
 
 .logo-section {
@@ -130,6 +132,12 @@ body {
   letter-spacing: 3px;
   text-transform: uppercase;
   opacity: 0.9;
+}
+
+.features-section {
+  background: transparent; /* This removes the white block */
+  padding: 2rem;
+  border-radius: 20px;
 }
 
 .features-section h3 {
