@@ -58,20 +58,38 @@ const Home = () => {
         <div className="features-grid">
           <div className="feature-card">
             <div className="feature-icon-wrapper">
-              <div className="feature-icon">🚀</div>
+              <div className="feature-icon">🎯</div>
             </div>
-            <h3 className="feature-title">Quick Reporting</h3>
+            <h3 className="feature-title">Easy to Use</h3>
             <p className="feature-description">
-              Report lost or found items in seconds with our intuitive interface
+              Simple interface for quick reporting and finding lost items
             </p>
           </div>
           <div className="feature-card">
             <div className="feature-icon-wrapper">
-              <div className="feature-icon">🎯</div>
+              <div className="feature-icon">🔐</div>
             </div>
-            <h3 className="feature-title">Smart Matching</h3>
+            <h3 className="feature-title">Secure Platform</h3>
             <p className="feature-description">
-              Our AI-powered system matches lost items with found items automatically
+              Your data is safe and private with our secure system
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrapper">
+              <div className="feature-icon">�</div>
+            </div>
+            <h3 className="feature-title">Smart Search</h3>
+            <p className="feature-description">
+              Advanced filtering by department & location for quick results
+            </p>
+          </div>
+          <div className="feature-card">
+            <div className="feature-icon-wrapper">
+              <div className="feature-icon">🏫</div>
+            </div>
+            <h3 className="feature-title">Verified Users</h3>
+            <p className="feature-description">
+              Only NIT KKR students and faculty members
             </p>
           </div>
           <div className="feature-card">
@@ -81,33 +99,6 @@ const Home = () => {
             <h3 className="feature-title">Photo Upload</h3>
             <p className="feature-description">
               Upload images for better identification and faster recovery
-            </p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon-wrapper">
-              <div className="feature-icon">🔔</div>
-            </div>
-            <h3 className="feature-title">Instant Alerts</h3>
-            <p className="feature-description">
-              Get notified immediately when someone reports a matching item
-            </p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon-wrapper">
-              <div className="feature-icon">🏫</div>
-            </div>
-            <h3 className="feature-title">Campus Wide</h3>
-            <p className="feature-description">
-              Covers all departments, hostels, and campus buildings
-            </p>
-          </div>
-          <div className="feature-card">
-            <div className="feature-icon-wrapper">
-              <div className="feature-icon">📊</div>
-            </div>
-            <h3 className="feature-title">Track Progress</h3>
-            <p className="feature-description">
-              Monitor the status of your reported items in real-time
             </p>
           </div>
         </div>
@@ -121,7 +112,7 @@ const Home = () => {
             <h2 className="section-title">Making a Difference</h2>
             <p className="section-subtitle">See how we're helping the NIT KKR community</p>
           </div>
-          <div className="stats-grid">
+          <div className="stats-slider">
             <div className="stat-card">
               <div className="stat-number">2,500+</div>
               <div className="stat-label">Active Users</div>
