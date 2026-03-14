@@ -18,8 +18,12 @@ const Home = () => {
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-background"></div>
+        <div className="hero-particles"></div>
         <div className="hero-content">
           <div className="hero-text">
+            <div className="hero-badge">
+              <span className="badge-text">🎓 NIT KKR Campus</span>
+            </div>
             <h1 className="hero-title">
               <span className="title-main">NIT KKR</span>
               <span className="title-sub">Lost & Found Portal</span>
@@ -28,12 +32,28 @@ const Home = () => {
               Your trusted platform for finding lost items and returning found belongings. 
               Join our community of 2,500+ students and faculty members.
             </p>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <span className="stat-number">2,500+</span>
+                <span className="stat-label">Active Users</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">1,800+</span>
+                <span className="stat-label">Items Returned</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-number">85%</span>
+                <span className="stat-label">Success Rate</span>
+              </div>
+            </div>
             <div className="hero-buttons">
               <button onClick={handleRegister} className="hero-btn primary">
-                Get Started
+                <span className="btn-text">Get Started</span>
+                <span className="btn-icon">🚀</span>
               </button>
               <button onClick={handleLogin} className="hero-btn secondary">
-                Sign In
+                <span className="btn-text">Sign In</span>
+                <span className="btn-icon">🔐</span>
               </button>
             </div>
           </div>
@@ -44,6 +64,22 @@ const Home = () => {
               <div className="floating-icon icon-3">🎓</div>
               <div className="floating-icon icon-4">📚</div>
               <div className="floating-icon icon-5">🔐</div>
+              <div className="floating-icon icon-6">📸</div>
+              <div className="floating-icon icon-7">🎯</div>
+              <div className="floating-icon icon-8">🏫</div>
+            </div>
+            <div className="hero-card">
+              <div className="card-header">
+                <div className="card-icon">📱</div>
+                <div className="card-title">Mobile App</div>
+              </div>
+              <div className="card-content">
+                <p>Access anywhere, anytime</p>
+                <div className="card-stats">
+                  <span>⭐ 4.8 Rating</span>
+                  <span>📱 10K+ Downloads</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -264,7 +300,7 @@ const Home = () => {
             <ul className="footer-links">
               <li><a href="/login">Sign In</a></li>
               <li><a href="/register">Register</a></li>
-              <li><a href="/dashboard">Dashboard</a></li>
+              {/* <li><a href="/dashboard">Dashboard</a></li> */}
             </ul>
           </div>
           <div className="footer-section">
