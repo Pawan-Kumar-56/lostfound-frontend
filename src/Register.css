@@ -43,7 +43,7 @@ body {
 .register-container {
   display: flex;
   min-height: 100vh;
-  background-color: #000000; /* Force black background */
+  /* background-color: #000000; Force black background */
   position: relative;
 }
 
