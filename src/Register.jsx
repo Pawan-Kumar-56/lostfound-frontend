@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React,{useState} from "react";
 import { authAPI } from './services/api';
 import './Register.css';
 
 const Register = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -71,7 +69,7 @@ const Register = () => {
             <h3>🌟 Why Join Our Community?</h3>
             <div className="feature-grid">
               <div className="feature-item">
-                <div className="feature-icon">🔍</div>
+                <div className="feature-icon">�</div>
                 <h4>Smart Search</h4>
                 <p>Advanced filtering by department & location</p>
               </div>
@@ -81,17 +79,17 @@ const Register = () => {
                 <p>Only NIT KKR students & faculty</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">📊</div>
+                <div className="feature-icon">�</div>
                 <h4>High Success Rate</h4>
                 <p>85%+ items successfully returned</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">🎯</div>
+                <div className="feature-icon">�</div>
                 <h4>Easy to Use</h4>
                 <p>Simple interface for quick reporting</p>
               </div>
               <div className="feature-item">
-                <div className="feature-icon">📸</div>
+                <div className="feature-icon">�</div>
                 <h4>Photo Upload</h4>
                 <p>Upload images for better identification</p>
               </div>
@@ -247,13 +245,13 @@ const Register = () => {
                 disabled={loading}
                 className="register-btn"
               >
-                {loading ? 'Creating Account...' : ' Create Account'}
+                {loading ? 'Creating Account...' : '🎉 Create Account'}
               </button>
             </div>
           </form>
 
           <div className="login-link">
-            Already have an account? <a href="/login" onClick={(e) => { e.preventDefault(); navigate('/login'); }}>Sign In</a>
+            Already have an account? <a href="/login">Sign In</a>
           </div>
         </div>
       </div>
