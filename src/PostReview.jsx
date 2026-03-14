@@ -68,15 +68,30 @@ const PostReview = () => {
     setLoading(true);
     
     try {
-      // For now, show success message since backend will be integrated later
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Get token from storage
+      const token = localStorage.getItem('token');
       
-      alert('Review posted successfully! Backend integration will be available soon.');
-      navigate('/reviews');
+      const response = await fetch('http://localhost:8080/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        alert('Review posted successfully!');
+        navigate('/reviews');
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Failed to post review. Please try again.');
+      }
       
     } catch (error) {
       console.error('Error posting review:', error);
-      alert('Failed to post review. Please try again.');
+      alert('Network error. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
