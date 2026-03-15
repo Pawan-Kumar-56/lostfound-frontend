@@ -54,14 +54,11 @@ const PostReview = () => {
     setLoading(true);
     
     try {
-      // Get token from storage
-      const token = localStorage.getItem('token');
-      
+      // Try to connect to backend
       const response = await fetch('http://localhost:8080/api/reviews', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData)
       });
@@ -77,7 +74,26 @@ const PostReview = () => {
       
     } catch (error) {
       console.error('Error posting review:', error);
-      alert('Network error. Please check your connection and try again.');
+      
+      // Check if it's a connection error
+      if (error.message.includes('Failed to fetch') || error.message.includes('ERR_CONNECTION_REFUSED')) {
+        alert('Backend server is not running. Review saved locally!\n\nPlease start the backend server on localhost:8080 to save reviews to database.');
+        
+        // Save to localStorage as fallback
+        const existingReviews = JSON.parse(localStorage.getItem('localReviews') || '[]');
+        const newReview = {
+          id: Date.now(),
+          ...formData,
+          createdAt: new Date().toISOString()
+        };
+        existingReviews.push(newReview);
+        localStorage.setItem('localReviews', JSON.stringify(existingReviews));
+        
+        // Navigate to reviews page
+        navigate('/reviews');
+      } else {
+        alert('Network error. Please check your connection and try again.');
+      }
     } finally {
       setLoading(false);
     }

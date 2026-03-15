@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
@@ -20,6 +20,7 @@ function App() {
         <Route path="/postitem" element={<PostItem />} />
         <Route path="/viewitems" element={<ViewItem />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/viewreviews" element={<Navigate to="/reviews" replace />} />
         <Route path="/postreview" element={<PostReview />} />
       </Routes>
     </BrowserRouter>

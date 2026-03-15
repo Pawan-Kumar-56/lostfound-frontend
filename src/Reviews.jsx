@@ -15,6 +15,11 @@ const Reviews = () => {
   const fetchReviews = async () => {
     try {
       setLoading(true);
+      
+      // First try to get from localStorage (for offline mode)
+      const localReviews = JSON.parse(localStorage.getItem('localReviews') || '[]');
+      
+      // Try to fetch from backend
       const response = await fetch('http://localhost:8080/api/reviews');
       
       if (!response.ok) {
@@ -23,46 +28,55 @@ const Reviews = () => {
       
       const data = await response.json();
       setReviews(data);
+      setError(null); // Clear any previous errors
+      
     } catch (err) {
       console.error('Error fetching reviews:', err);
       setError(err.message);
       
-      // Fallback to hardcoded data if backend is not available
-      setReviews([
-        {
-          id: 1,
-          name: "Rahul Kumar",
-          email: "rahul@nitkkr.ac.in",
-          rating: 5,
-          title: "Amazing Platform!",
-          review: "I lost my wallet during the fest and found it within hours thanks to this platform! The notification system is amazing and the community is very helpful.",
-          department: "CSE",
-          year: "3rd Year",
-          createdAt: "2024-03-10T10:30:00"
-        },
-        {
-          id: 2,
-          name: "Priya Sharma",
-          email: "priya@nitkkr.ac.in",
-          rating: 5,
-          title: "Very Helpful",
-          review: "Found someone's laptop bag and was able to return it to the owner quickly. The platform made it super easy to connect with the right person.",
-          department: "ECE",
-          year: "2nd Year",
-          createdAt: "2024-03-08T14:20:00"
-        },
-        {
-          id: 3,
-          name: "Dr. Singh",
-          email: "singh@nitkkr.ac.in",
-          rating: 5,
-          title: "Excellent Service",
-          review: "Amazing platform! Very user-friendly and effective for finding lost items. I've recommended it to all my students.",
-          department: "Faculty",
-          year: "Professor",
-          createdAt: "2024-03-05T09:15:00"
-        }
-      ]);
+      // Use localStorage reviews as fallback
+      const localReviews = JSON.parse(localStorage.getItem('localReviews') || '[]');
+      
+      if (localReviews.length > 0) {
+        setReviews(localReviews);
+      } else {
+        // Fallback to hardcoded data if no localStorage reviews
+        setReviews([
+          {
+            id: 1,
+            name: "Rahul Kumar",
+            email: "rahul@nitkkr.ac.in",
+            rating: 5,
+            title: "Amazing Platform!",
+            review: "I lost my wallet during the fest and found it within hours thanks to this platform! The notification system is amazing and the community is very helpful.",
+            department: "CSE",
+            year: "3rd Year",
+            createdAt: "2024-03-10T10:30:00"
+          },
+          {
+            id: 2,
+            name: "Priya Sharma",
+            email: "priya@nitkkr.ac.in",
+            rating: 5,
+            title: "Very Helpful",
+            review: "Found someone's laptop bag and was able to return it to the owner quickly. The platform made it super easy to connect with the right person.",
+            department: "ECE",
+            year: "2nd Year",
+            createdAt: "2024-03-08T14:20:00"
+          },
+          {
+            id: 3,
+            name: "Dr. Singh",
+            email: "singh@nitkkr.ac.in",
+            rating: 5,
+            title: "Excellent Service",
+            review: "Amazing platform! Very user-friendly and effective for finding lost items. I've recommended it to all my students.",
+            department: "Faculty",
+            year: "Professor",
+            createdAt: "2024-03-05T09:15:00"
+          }
+        ]);
+      }
     } finally {
       setLoading(false);
     }
