@@ -84,7 +84,7 @@ const Dashboard = () => {
   };
 
   const handleViewReviews = () => {
-    navigate('/viewreviews');
+    navigate('/reviews');
   };
 
   const getCurrentTime = () => {

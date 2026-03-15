@@ -1,93 +1,72 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Reviews.css';
 
 const Reviews = () => {
   const navigate = useNavigate();
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Rahul Kumar",
-      role: "CSE Student",
-      avatar: "👨‍🎓",
-      text: "I lost my wallet during the fest and found it within hours thanks to this platform! The notification system is amazing and the community is very helpful.",
-      rating: 5,
-      date: "March 10, 2024"
-    },
-    {
-      id: 2,
-      name: "Priya Sharma",
-      role: "ECE Student",
-      avatar: "👩‍🎓",
-      text: "Found someone's laptop bag and was able to return it to the owner quickly. The platform made it super easy to connect with the right person.",
-      rating: 5,
-      date: "March 8, 2024"
-    },
-    {
-      id: 3,
-      name: "Dr. Singh",
-      role: "Faculty Member",
-      avatar: "👨‍🏫",
-      text: "Amazing platform! Very user-friendly and effective for finding lost items. I've recommended it to all my students.",
-      rating: 5,
-      date: "March 5, 2024"
-    },
-    {
-      id: 4,
-      name: "Anjali Verma",
-      role: "ME Student",
-      avatar: "👩‍🎓",
-      text: "Lost my phone in the library and someone found it through this app. The instant alerts are a game changer!",
-      rating: 4,
-      date: "March 3, 2024"
-    },
-    {
-      id: 5,
-      name: "Vikas Rao",
-      role: "EE Student",
-      avatar: "👨‍🎓",
-      text: "Great interface and very responsive. Found my lost keys within 30 minutes of posting. Highly recommend!",
-      rating: 5,
-      date: "February 28, 2024"
-    },
-    {
-      id: 6,
-      name: "Neha Patel",
-      role: "CHE Student",
-      avatar: "👩‍🎓",
-      text: "The photo upload feature is so helpful. Found my lost notebook easily because someone uploaded clear photos.",
-      rating: 4,
-      date: "February 25, 2024"
-    },
-    {
-      id: 7,
-      name: "Amit Kumar",
-      role: "CSE Student",
-      avatar: "👨‍🎓",
-      text: "Best lost and found platform in NIT KKR! Very reliable and the community is very active.",
-      rating: 5,
-      date: "February 20, 2024"
-    },
-    {
-      id: 8,
-      name: "Sunita Reddy",
-      role: "CE Student",
-      avatar: "👩‍🎓",
-      text: "Love the smart matching feature. It automatically connects you with people who found similar items.",
-      rating: 4,
-      date: "February 15, 2024"
-    },
-    {
-      id: 9,
-      name: "Prof. Kumar",
-      role: "Faculty Member",
-      avatar: "👨‍🏫",
-      text: "As a faculty member, I've seen many students benefit from this platform. It's making our campus better.",
-      rating: 5,
-      date: "February 10, 2024"
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  const fetchReviews = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:8080/api/reviews');
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch reviews');
+      }
+      
+      const data = await response.json();
+      setReviews(data);
+    } catch (err) {
+      console.error('Error fetching reviews:', err);
+      setError(err.message);
+      
+      // Fallback to hardcoded data if backend is not available
+      setReviews([
+        {
+          id: 1,
+          name: "Rahul Kumar",
+          email: "rahul@nitkkr.ac.in",
+          rating: 5,
+          title: "Amazing Platform!",
+          review: "I lost my wallet during the fest and found it within hours thanks to this platform! The notification system is amazing and the community is very helpful.",
+          department: "CSE",
+          year: "3rd Year",
+          createdAt: "2024-03-10T10:30:00"
+        },
+        {
+          id: 2,
+          name: "Priya Sharma",
+          email: "priya@nitkkr.ac.in",
+          rating: 5,
+          title: "Very Helpful",
+          review: "Found someone's laptop bag and was able to return it to the owner quickly. The platform made it super easy to connect with the right person.",
+          department: "ECE",
+          year: "2nd Year",
+          createdAt: "2024-03-08T14:20:00"
+        },
+        {
+          id: 3,
+          name: "Dr. Singh",
+          email: "singh@nitkkr.ac.in",
+          rating: 5,
+          title: "Excellent Service",
+          review: "Amazing platform! Very user-friendly and effective for finding lost items. I've recommended it to all my students.",
+          department: "Faculty",
+          year: "Professor",
+          createdAt: "2024-03-05T09:15:00"
+        }
+      ]);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
 
   const handleBackToHome = () => {
     navigate('/');
@@ -100,6 +79,45 @@ const Reviews = () => {
       </span>
     ));
   };
+
+  const formatDate = (dateString) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    } catch {
+      return "Recent";
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="reviews-wrapper">
+        <div className="loading-container">
+          <div className="loading-spinner">
+            <div className="spinner"></div>
+            <p>Loading reviews...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="reviews-wrapper">
+        <div className="error-container">
+          <h2>Connection Error</h2>
+          <p>{error}</p>
+          <p>Showing sample reviews instead...</p>
+          <button onClick={fetchReviews} className="retry-btn">Retry</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="reviews-wrapper">
@@ -117,28 +135,40 @@ const Reviews = () => {
       {/* Reviews Grid */}
       <main className="reviews-main">
         <div className="reviews-grid">
-          {reviews.map((review) => (
-            <div key={review.id} className="review-card">
-              <div className="review-header">
-                <div className="review-author">
-                  <div className="author-avatar">{review.avatar}</div>
-                  <div className="author-info">
-                    <h3 className="author-name">{review.name}</h3>
-                    <p className="author-role">{review.role}</p>
+          {reviews.length === 0 ? (
+            <div className="no-reviews">
+              <div className="no-reviews-icon">📝</div>
+              <h3>No Reviews Yet</h3>
+              <p>Be the first to share your experience!</p>
+              <button onClick={() => navigate('/postreview')} className="post-review-btn">
+                Post a Review
+              </button>
+            </div>
+          ) : (
+            reviews.map((review) => (
+              <div key={review.id} className="review-card">
+                <div className="review-header">
+                  <div className="review-author">
+                    <div className="author-avatar">👤</div>
+                    <div className="author-info">
+                      <h3 className="author-name">{review.name}</h3>
+                      <p className="author-role">{review.department} • {review.year}</p>
+                    </div>
+                  </div>
+                  <div className="review-rating">
+                    {renderStars(review.rating)}
                   </div>
                 </div>
-                <div className="review-rating">
-                  {renderStars(review.rating)}
+                <div className="review-content">
+                  <h4 className="review-title">{review.title || "Great Experience"}</h4>
+                  <p className="review-text">{review.review}</p>
+                  <div className="review-meta">
+                    <span className="review-date">{formatDate(review.createdAt)}</span>
+                  </div>
                 </div>
               </div>
-              <div className="review-content">
-                <p className="review-text">{review.text}</p>
-                <div className="review-meta">
-                  <span className="review-date">{review.date}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </main>
 
