@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { reviewsAPI, storage } from "./services/api";
-import './PostReview.css';
+import "./PostReview.css";
 
 const PostReview = () => {
 
@@ -10,14 +10,14 @@ const PostReview = () => {
 
   const [formData, setFormData] = useState({
     rating: 5,
-    title: '',
-    review: ''
+    title: "",
+    review: ""
   });
 
-  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
+
     const { name, value } = e.target;
 
     setFormData(prev => ({
@@ -25,36 +25,11 @@ const PostReview = () => {
       [name]: value
     }));
 
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
-    }
-  };
-
-  const validateForm = () => {
-
-    const newErrors = {};
-
-    if (!formData.title.trim()) {
-      newErrors.title = "Review title required";
-    }
-
-    if (formData.review.trim().length < 10) {
-      newErrors.review = "Review must be at least 10 characters";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
-    if (!validateForm()) return;
 
     setLoading(true);
 
@@ -64,8 +39,8 @@ const PostReview = () => {
         ...formData,
         name: currentUser?.name || "Anonymous",
         email: currentUser?.email || "anonymous@email.com",
-        department: currentUser?.department || "NIT KKR",
-        year: currentUser?.year || "Student"
+        department: currentUser?.department || "Student",
+        year: currentUser?.year || "NIT KKR"
       };
 
       await reviewsAPI.create(reviewData);
@@ -76,15 +51,15 @@ const PostReview = () => {
 
     } catch (error) {
 
-      console.error("Review error:", error);
-
-      alert("Failed to post review. Please try again.");
+      console.error("Post review error:", error);
+      alert("Failed to post review");
 
     } finally {
 
       setLoading(false);
 
     }
+
   };
 
   const renderStars = (rating) => {
@@ -94,7 +69,6 @@ const PostReview = () => {
       <button
         key={index}
         type="button"
-        className={`star ${index < rating ? 'filled' : ''}`}
         onClick={() =>
           setFormData(prev => ({
             ...prev,
@@ -106,6 +80,7 @@ const PostReview = () => {
       </button>
 
     ));
+
   };
 
   return (
@@ -116,56 +91,41 @@ const PostReview = () => {
 
       <form onSubmit={handleSubmit}>
 
-        <div className="form-group">
+        <label>Title</label>
 
-          <label>Review Title</label>
+        <input
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          required
+        />
 
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
+        <label>Rating</label>
 
-          {errors.title && <p className="error">{errors.title}</p>}
-
+        <div>
+          {renderStars(formData.rating)}
         </div>
 
-        <div className="form-group">
+        <label>Review</label>
 
-          <label>Rating</label>
+        <textarea
+          name="review"
+          value={formData.review}
+          onChange={handleChange}
+          required
+        />
 
-          <div className="rating-stars">
-            {renderStars(formData.rating)}
-          </div>
-
-        </div>
-
-        <div className="form-group">
-
-          <label>Your Review</label>
-
-          <textarea
-            name="review"
-            value={formData.review}
-            onChange={handleChange}
-          />
-
-          {errors.review && <p className="error">{errors.review}</p>}
-
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-        >
+        <button type="submit" disabled={loading}>
           {loading ? "Posting..." : "Post Review"}
         </button>
 
       </form>
 
     </div>
+
   );
+
 };
 
 export default PostReview;

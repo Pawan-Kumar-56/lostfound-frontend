@@ -1,220 +1,132 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Reviews.css';
+import React, { useEffect, useState } from "react";
+import { reviewsAPI } from "./services/api";
+import { useNavigate } from "react-router-dom";
+import "./Reviews.css";
 
 const Reviews = () => {
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
-const [reviews, setReviews] = useState([]);
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const API_URL = "https://lostfound-backend-2ugd.onrender.com/api/reviews";
+  useEffect(() => {
 
-useEffect(() => {
-fetchReviews();
-}, []);
+    fetchReviews();
 
-const fetchReviews = async () => {
+  }, []);
 
-```
-try {
+  const fetchReviews = async () => {
 
-  setLoading(true);
+    try {
 
-  const response = await fetch(API_URL);
+      const data = await reviewsAPI.getAll();
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch reviews");
-  }
+      setReviews(data);
 
-  const data = await response.json();
+    } catch (error) {
 
-  setReviews(data);
-  setError(null);
+      console.error("Error loading reviews:", error);
 
-} catch (err) {
+    } finally {
 
-  console.error("Error fetching reviews:", err);
-  setError(err.message);
+      setLoading(false);
 
-  const localReviews = JSON.parse(localStorage.getItem("localReviews") || "[]");
+    }
 
-  if (localReviews.length > 0) {
-    setReviews(localReviews);
-  } else {
+  };
 
-    setReviews([
-      {
-        id: 1,
-        name: "Rahul Kumar",
-        email: "rahul@nitkkr.ac.in",
-        rating: 5,
-        title: "Amazing Platform!",
-        review: "I lost my wallet during the fest and found it within hours thanks to this platform!",
-        department: "CSE",
-        year: "3rd Year",
-        createdAt: "2024-03-10T10:30:00"
-      },
-      {
-        id: 2,
-        name: "Priya Sharma",
-        email: "priya@nitkkr.ac.in",
-        rating: 5,
-        title: "Very Helpful",
-        review: "Found someone's laptop bag and returned it easily using this platform.",
-        department: "ECE",
-        year: "2nd Year",
-        createdAt: "2024-03-08T14:20:00"
-      },
-      {
-        id: 3,
-        name: "Dr. Singh",
-        email: "singh@nitkkr.ac.in",
-        rating: 5,
-        title: "Excellent Service",
-        review: "Amazing platform! Very user-friendly and effective for finding lost items.",
-        department: "Faculty",
-        year: "Professor",
-        createdAt: "2024-03-05T09:15:00"
-      }
-    ]);
+  const renderStars = (rating) => {
+
+    return Array.from({ length: 5 }, (_, index) => (
+
+      <span key={index}>
+        {index < rating ? "⭐" : "☆"}
+      </span>
+
+    ));
+
+  };
+
+  const formatDate = (dateString) => {
+
+    const date = new Date(dateString);
+
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
+
+  };
+
+  if (loading) {
+
+    return (
+      <div className="reviews-wrapper">
+        <p>Loading reviews...</p>
+      </div>
+    );
 
   }
 
-} finally {
+  return (
 
-  setLoading(false);
+    <div className="reviews-wrapper">
 
-}
-```
+      <header>
 
-};
+        <h1>All Reviews</h1>
 
-const handleBackToHome = () => {
-navigate('/');
-};
+        <button onClick={() => navigate("/")}>
+          Back to Home
+        </button>
 
-const renderStars = (rating) => {
+      </header>
 
-```
-return Array.from({ length: 5 }, (_, index) => (
-  <span key={index}>
-    {index < rating ? "⭐" : "☆"}
-  </span>
-));
-```
+      <main>
 
-};
+        {reviews.length === 0 ? (
 
-const formatDate = (dateString) => {
+          <p>No reviews yet</p>
 
-```
-try {
+        ) : (
 
-  const date = new Date(dateString);
+          reviews.map(review => (
 
-  return date.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric"
-  });
+            <div key={review.id} className="review-card">
 
-} catch {
+              <h3>{review.name}</h3>
 
-  return "Recent";
+              <div>
+                {renderStars(review.rating)}
+              </div>
 
-}
-```
+              <h4>{review.title}</h4>
 
-};
+              <p>{review.review}</p>
 
-if (loading) {
+              <small>
+                {review.department} • {review.year}
+              </small>
 
-```
-return (
-  <div className="reviews-wrapper">
-    <p>Loading reviews...</p>
-  </div>
-);
-```
+              <br/>
 
-}
+              <small>
+                {formatDate(review.createdAt)}
+              </small>
 
-if (error) {
+            </div>
 
-```
-return (
-  <div className="reviews-wrapper">
-    <h2>Connection Error</h2>
-    <p>{error}</p>
-    <button onClick={fetchReviews}>Retry</button>
-  </div>
-);
-```
+          ))
 
-}
+        )}
 
-return (
+      </main>
 
-```
-<div className="reviews-wrapper">
+    </div>
 
-  <header className="reviews-header">
-
-    <h1>All Reviews</h1>
-
-    <button onClick={handleBackToHome}>
-      ← Back to Home
-    </button>
-
-  </header>
-
-  <main className="reviews-main">
-
-    {reviews.length === 0 ? (
-
-      <p>No Reviews Yet</p>
-
-    ) : (
-
-      reviews.map(review => (
-
-        <div key={review.id} className="review-card">
-
-          <h3>{review.name}</h3>
-
-          <div>
-            {renderStars(review.rating)}
-          </div>
-
-          <h4>{review.title}</h4>
-
-          <p>{review.review}</p>
-
-          <small>
-            {review.department} • {review.year}
-          </small>
-
-          <br/>
-
-          <small>
-            {formatDate(review.createdAt)}
-          </small>
-
-        </div>
-
-      ))
-
-    )}
-
-  </main>
-
-</div>
-```
-
-);
+  );
 
 };
 
