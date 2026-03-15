@@ -149,4 +149,27 @@ export const storage = {
   },
 };
 
+// Reviews API
+export const reviewsAPI = {
+
+  // Get all reviews
+  getAll: async () => {
+    return await apiRequest('/api/reviews');
+  },
+
+  // Create review
+  create: async (reviewData) => {
+    return await apiRequest('/api/reviews', {
+      method: 'POST',
+      body: JSON.stringify(reviewData),
+    });
+  },
+
+  // Get review by id
+  getById: async (id) => {
+    return await apiRequest(`/api/reviews/${id}`);
+  }
+
+};
+
 export default apiRequest;
