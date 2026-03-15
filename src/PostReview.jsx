@@ -37,7 +37,7 @@ const PostReview = () => {
 
       const reviewData = {
         ...formData,
-        name: currentUser?.name || "Anonymous",
+        name: currentUser?.fullName || currentUser?.name || "Anonymous",
         email: currentUser?.email || "anonymous@email.com",
         department: currentUser?.department || "Student",
         year: currentUser?.year || "NIT KKR"
