@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { reviewsAPI } from "./services/api";
+import { storage } from "./services/api";
 import { useNavigate } from "react-router-dom";
 import "./Reviews.css";
 
@@ -9,6 +10,10 @@ const Reviews = () => {
 
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Get actual user data from storage
+  const userData = storage.getUser();
+  const currentUserName = userData?.fullName || "User";
 
   useEffect(() => {
 
@@ -74,55 +79,53 @@ const Reviews = () => {
 
     <div className="reviews-wrapper">
 
-      <header>
+      {/* Header Section */}
+      <section className="reviews-hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="reviews-title">What People Say</h1>
+            <p className="reviews-subtitle">Real stories from our NIT KKR community</p>
+            <button onClick={() => navigate("/")} className="back-to-home-btn">
+              ← Back to Home
+            </button>
+          </div>
+        </div>
+      </section>
 
-        <h1>All Reviews</h1>
-
-        <button onClick={() => navigate("/")}>
-          Back to Home
-        </button>
-
-      </header>
-
-      <main>
-
-        {reviews.length === 0 ? (
-
-          <p>No reviews yet</p>
-
-        ) : (
-
-          reviews.map(review => (
-
-            <div key={review.id} className="review-card">
-
-              <h3>{review.name}</h3>
-
-              <div>
-                {renderStars(review.rating)}
-              </div>
-
-              <h4>{review.title}</h4>
-
-              <p>{review.review}</p>
-
-              <small>
-                {review.department} • {review.year}
-              </small>
-
-              <br/>
-
-              <small>
-                {formatDate(review.createdAt)}
-              </small>
-
+      {/* Reviews Grid Section */}
+      <section className="reviews-section">
+        <div className="reviews-container">
+          {reviews.length === 0 ? (
+            <div className="no-reviews">
+              <div className="no-reviews-icon">📝</div>
+              <h3>No Reviews Yet</h3>
+              <p>Be the first to share your experience with the NIT KKR Lost & Found Portal!</p>
+              <button onClick={() => navigate('/postreview')} className="post-review-btn">
+                Post a Review
+              </button>
             </div>
-
-          ))
-
-        )}
-
-      </main>
+          ) : (
+            <div className="reviews-grid">
+              {reviews.map(review => (
+                <div key={review.id} className="review-card">
+                  <div className="review-content">
+                    <p className="review-text">
+                      "{review.review}"
+                    </p>
+                    <div className="review-author">
+                      <div className="author-avatar">👨‍🎓</div>
+                      <div className="author-info">
+                        <div className="author-name">{review.name}</div>
+                        <div className="author-role">{review.department} • {review.year}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
     </div>
 
